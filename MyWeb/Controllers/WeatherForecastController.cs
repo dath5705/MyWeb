@@ -18,7 +18,7 @@ namespace MyWeb.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet("GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             var a = 5;
@@ -29,6 +29,13 @@ namespace MyWeb.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+        [HttpGet("GetMyWeb")]
+        public string GetMyWeb()
+        {
+            var rng = "Hai Dat";
+            return rng;
+                
         }
     }
 }
