@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using MyWeb.Commands;
+using MyWeb.Result;
 
 namespace MyWeb.Controllers
 {
@@ -30,12 +32,36 @@ namespace MyWeb.Controllers
             })
             .ToArray();
         }
-        [HttpGet("GetMyWeb")]
-        public string GetMyWeb()
+        [HttpGet("Calculate")]
+        public IActionResult Culculate([FromQuery] CalculateCommand command)
         {
-            var rng = "Hai Dat";
-            return rng;
-                
+            return Ok(new CalculateResult
+            {
+                Result = command.FirstNumber + command.SecondNumber,
+                Message = "Result"
+
+            });
+        }
+        [HttpPost("Calculate")]
+        public IActionResult Culculate2([FromQuery] CalculateCommand command)
+        {
+            int a = command.FirstNumber - command.ThirdNumber;
+                if (a < 0)
+            {
+                return Ok(new CalculateResult
+                {
+                    Result = command.FirstNumber - command.ThirdNumber,
+                    Message = "da"
+                });
+            }
+            else
+            {
+                return Ok(new CalculateResult
+                {
+                    Result = command.FirstNumber - command.ThirdNumber,
+                    Message = "Result"
+                });
+            }
         }
     }
 }
