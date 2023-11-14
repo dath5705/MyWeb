@@ -23,7 +23,6 @@ namespace MyWeb.Controllers
         [HttpGet("GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            var a = 5;
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -37,31 +36,58 @@ namespace MyWeb.Controllers
         {
             return Ok(new CalculateResult
             {
-                Result = command.FirstNumber + command.SecondNumber,
+                Equation = command.FirstNumber + " + " + command.SecondNumber + " + " + command.ThirdNumber + " = ",
+                Result1 = command.FirstNumber + command.SecondNumber + command.ThirdNumber,
                 Message = "Result"
 
             });
         }
         [HttpPost("Calculate")]
-        public IActionResult Culculate2([FromQuery] CalculateCommand command)
+        public IActionResult Culculate1([FromForm] CalculateCommand command)
         {
-            int a = command.FirstNumber - command.ThirdNumber;
-                if (a < 0)
+            if (command.FirstNumber == 0)
             {
                 return Ok(new CalculateResult
                 {
-                    Result = command.FirstNumber - command.ThirdNumber,
-                    Message = "da"
+                    Equation = command.SecondNumber + "X + " + command.ThirdNumber,
+                    Result1 = (-command.ThirdNumber) / (command.SecondNumber),
+                    Result2 = (-command.ThirdNumber) / (command.SecondNumber),
+                    Message = "Phuong trinh co nghiem:",
                 });
             }
             else
             {
-                return Ok(new CalculateResult
+                if (command.Delta < 0)
                 {
-                    Result = command.FirstNumber - command.ThirdNumber,
-                    Message = "Result"
-                });
+                    return Ok(new CalculateResult
+                    {
+                        Equation = command.FirstNumber + "X2 + " + command.SecondNumber + "X + " + command.ThirdNumber,
+                        Message = "Phuong trinh vo nghiem",
+                    });
+                }
+                else if (command.Delta == 0)
+                {
+                    return Ok(new CalculateResult
+                    {
+                        Equation = command.FirstNumber + "X2 + " + command.SecondNumber + "X + " + command.ThirdNumber,
+                        Result1 = (-command.SecondNumber) / (2 * command.FirstNumber),
+                        Result2 = (-command.SecondNumber) / (2 * command.FirstNumber),
+                        Message = "Phuong trinh co nghiem kep:",
+                    });
+                }
+                else
+                {
+                    return Ok(new CalculateResult
+                    {
+                        Equation = command.FirstNumber + "X2 + " + command.SecondNumber + "X + " + command.ThirdNumber,
+                        Result1 = (-command.SecondNumber + Math.Sqrt(command.Delta)) / (2 * command.FirstNumber),
+                        Result2 = (-command.SecondNumber - Math.Sqrt(command.Delta)) / (2 * command.FirstNumber),
+                        Message = "Phuong trinh 2 nghiem"
+                    });
+
+                }
             }
+
         }
     }
 }
