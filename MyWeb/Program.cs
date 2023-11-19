@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace MyWeb
 {
     public class Program
@@ -9,6 +11,13 @@ namespace MyWeb
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<MyWebDatabase>(optionsAction =>
+            {
+                optionsAction.UseSqlServer(builder.Configuration.GetConnectionString("MyWeb"), options =>
+                {
+                    options.MinBatchSize(3);
+                });
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
