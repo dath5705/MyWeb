@@ -13,9 +13,9 @@ namespace MyWeb
             builder.Services.AddControllers();
             builder.Services.AddDbContext<MyWebDatabase>(optionsAction =>
             {
-                optionsAction.UseSqlServer(builder.Configuration.GetConnectionString("MyWeb"), options =>
+                optionsAction.UseSqlServer(builder.Configuration.GetConnectionString("AppConn"), options =>
                 {
-                    options.MinBatchSize(3);
+                    options.MinBatchSize(2);
                 });
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
