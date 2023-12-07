@@ -13,8 +13,8 @@ namespace MyWeb.Services
             var sessionId = "";
             var claims = new Claim[]
             {
-                new Claim("sub", user.ID.ToString()),
-                new Claim("username", user.UserName ?? "")
+                new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName ?? "")
             };
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("47D528A3D79B3F8DF7824F847E5DA"));
             var creds =new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
